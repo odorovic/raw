@@ -1,5 +1,36 @@
 (function(){
 
+  var root = this;
+
+  var has_require = typeof require !== 'undefined';
+
+  var d3 = root.d3;
+  var raw = root.raw;
+
+  if( typeof raw === 'undefined' ) {
+    if( has_require ) {
+      raw = require('raw')
+    } else {
+      throw new Error('patrun requires raw, see http://d3js.org');
+    }
+  }
+
+  if( typeof d3 === 'undefined' ) {
+    if( has_require ) {
+      d3 = require('d3')
+    } else {
+      throw new Error('patrun requires d3, see http://d3js.org');
+    }
+  }
+
+  if (typeof d3.sankey === 'undefined') {
+    if ( has_require ) {
+      require('d3-plugins').load('sankey')
+    }
+  }
+
+
+
 	var graph = raw.models.graph();
 
 	var chart = raw.chart()
@@ -74,10 +105,10 @@
 	    d3.values(nested)
 	    	.forEach(function (d){
 		    	var y = ( height() - d3.sum(d,function(n){ return n.dy+sankey.nodePadding();}) ) / 2 + sankey.nodePadding()/2;
-		    	d.sort(function (a,b){ 
+		    	d.sort(function (a,b){
 		    		if (sortBy() == "automatic") return b.y - a.y;
 		    		if (sortBy() == "size") return b.dy - a.dy;
-		    		if (sortBy() == "name") return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;		
+		    		if (sortBy() == "name") return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
 		    	})
 		    	d.forEach(function (node){
 		    		node.y = y;
@@ -100,11 +131,11 @@
 		    			link.sy = ly;
 		    			ly += link.dy;
 		    		})
-		    	
+
 		    	ly = 0;
 
 		    	node.targetLinks
-		    		.sort(function(a,b){ 
+		    		.sort(function(a,b){
 		    			return a.source.y - b.source.y;
 		    		})
 		    		.forEach(function (link){
@@ -113,7 +144,7 @@
 		    		})
 			})
 		})
-	   
+
 	 	colors.domain(links, function (d){ return d.source.name; });
 
 		var link = g.append("g").selectAll(".link")
@@ -156,4 +187,4 @@
 
 	})
 
-})();
+}).call(this);

@@ -1,0 +1,9 @@
+{
+  "name": "raw",
+  "version": "1.0.0",
+  "main": "lib/raw.js",
+  "dependencies": {
+    "d3": "^3.5.0",
+    "d3-plugins": "https://github.com/odorovic/d3-plugins.git#nodeization"
+  }
+}
