@@ -4,6 +4,6 @@
   "main": "lib/raw.js",
   "dependencies": {
     "d3": "^3.5.0",
-    "d3-plugins": "https://github.com/odorovic/d3-plugins.git#nodeization"
+    "d3-plugins": "git://github.com/odorovic/d3-plugins.git#nodeization"
   }
 }
